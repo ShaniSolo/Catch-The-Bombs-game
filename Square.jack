@@ -1,0 +1,105 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/09/Square/Square.jack
+
+/** Implements a graphical square. */
+class Square {
+
+   field int x, y; // screen location of the square's top-left corner
+   field int width; // length of this square, in pixels
+   field int height; // length of this square, in pixels
+   field int flag0;
+   field Square square;
+   field Square rectangle;
+   field int recX;
+   field int squareX;
+
+   /** Constructs a new square with a given location and size. */
+   constructor Square new(int Ax, int Ay, int Awidth, int Aheight) {
+      let x = Ax;
+      let y = Ay;
+      let width = Awidth;
+      let height = Aheight;
+      do draw();
+      return this;
+   }
+
+   method int getX() {
+      return x;
+   }
+   
+   method int getWidth() {
+      return width;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the square on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y, x + width, y + height);
+      return;
+   }
+
+   method void handleDirection(int direction, Square square){
+      var char key;  // the key currently pressed by the user
+      let key = Keyboard.keyPressed();
+         if (key = 0) { return; }
+         if (key = 130) { do square.moveLeft(); }   // left arrow
+         if (key = 132) { do square.moveRight(); }   // right arrow
+
+         do Sys.wait(35);  // delays the next movement
+     return ;
+   }
+
+   /** Moves the square down by 2 pixels. */
+   method int moveDown(int direction, Square square, int flag, Square rectangle) {
+      let flag0 = flag;
+      while ((y + height) < 230) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + width, y + 1);
+         let y = y + 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, (y + height) - 1, x + width, y + height);
+         do Sys.wait(20);  // delays the next movement
+         do handleDirection(direction, square);
+      }
+      let flag0 = 0;
+      if ((rectangle.getX()) < (square.getX()))  { return -1; }
+      if ((rectangle.getX()) > (square.getX() + square.getWidth() + 1)) { return -1; }
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + width, y + height); 
+
+      return flag0;
+   }
+
+   /** Moves the square left by 2 pixels. */
+   method void moveLeft() {
+      if (x > 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle((x + width) - 1, y, x + width, y + height);
+         let x = x - 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y, x + 1, y + height);
+      }
+      return;
+   }
+   
+
+   /** Moves the square right by 2 pixels. */
+   method void moveRight() {
+      if ((x + width) < 510) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + 1, y + height);
+         let x = x + 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle((x + width) - 1, y, x + width, y + height);
+      }
+      return;
+   }
+}

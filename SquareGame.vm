@@ -1,0 +1,415 @@
+function SquareGame.new 0
+push constant 20
+call Memory.alloc 1
+pop pointer 0
+push constant 249
+push constant 232
+push constant 75
+push constant 12
+call Square.new 4
+pop this 0
+push constant 0
+pop this 1
+push constant 75
+pop this 8
+push constant 155
+pop this 9
+push constant 220
+pop this 10
+push constant 330
+pop this 11
+push constant 400
+pop this 12
+push constant 450
+pop this 13
+push constant 0
+pop this 14
+push constant 0
+pop this 15
+push constant 0
+pop this 16
+push constant 0
+pop this 17
+push constant 0
+pop this 18
+push constant 0
+pop this 19
+push pointer 0
+return
+function SquareGame.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Square.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function SquareGame.moveSquare 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+call Square.moveLeft 1
+pop temp 0
+label IF_FALSE0
+push this 1
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+call Square.moveRight 1
+pop temp 0
+label IF_FALSE1
+push constant 35
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function SquareGame.createRec1 0
+push argument 0
+pop pointer 0
+push this 14
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 8
+push constant 0
+push constant 2
+push constant 12
+call Square.new 4
+pop this 2
+push constant 1
+pop this 14
+label IF_FALSE0
+push constant 0
+return
+function SquareGame.createRec2 0
+push argument 0
+pop pointer 0
+push this 15
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 9
+push constant 0
+push constant 2
+push constant 12
+call Square.new 4
+pop this 3
+push constant 1
+pop this 15
+label IF_FALSE0
+push constant 0
+return
+function SquareGame.createRec3 0
+push argument 0
+pop pointer 0
+push this 16
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 10
+push constant 0
+push constant 2
+push constant 12
+call Square.new 4
+pop this 4
+push constant 1
+pop this 16
+label IF_FALSE0
+push constant 0
+return
+function SquareGame.createRec4 0
+push argument 0
+pop pointer 0
+push this 17
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 11
+push constant 0
+push constant 2
+push constant 12
+call Square.new 4
+pop this 5
+push constant 1
+pop this 17
+label IF_FALSE0
+push constant 0
+return
+function SquareGame.createRec5 0
+push argument 0
+pop pointer 0
+push this 18
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 12
+push constant 0
+push constant 2
+push constant 12
+call Square.new 4
+pop this 6
+push constant 1
+pop this 18
+label IF_FALSE0
+push constant 0
+return
+function SquareGame.createRec6 0
+push argument 0
+pop pointer 0
+push this 19
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 13
+push constant 0
+push constant 2
+push constant 12
+call Square.new 4
+pop this 7
+push constant 1
+pop this 19
+label IF_FALSE0
+push constant 0
+return
+function SquareGame.run 1
+push argument 0
+pop pointer 0
+label WHILE_EXP0
+push constant 0
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call SquareGame.moveSquare 1
+pop temp 0
+push pointer 0
+call SquareGame.createRec2 1
+pop temp 0
+push this 3
+push this 1
+push this 0
+push this 15
+push this 3
+call Square.moveDown 5
+pop this 15
+push this 15
+push constant 1
+neg
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE0
+push pointer 0
+call SquareGame.createRec5 1
+pop temp 0
+push this 6
+push this 1
+push this 0
+push this 18
+push this 6
+call Square.moveDown 5
+pop this 18
+push this 18
+push constant 1
+neg
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE1
+push pointer 0
+call SquareGame.createRec3 1
+pop temp 0
+push this 4
+push this 1
+push this 0
+push this 16
+push this 4
+call Square.moveDown 5
+pop this 16
+push this 16
+push constant 1
+neg
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE2
+push pointer 0
+call SquareGame.createRec6 1
+pop temp 0
+push this 7
+push this 1
+push this 0
+push this 19
+push this 7
+call Square.moveDown 5
+pop this 19
+push this 19
+push constant 1
+neg
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE3
+push pointer 0
+call SquareGame.createRec4 1
+pop temp 0
+push this 5
+push this 1
+push this 0
+push this 17
+push this 5
+call Square.moveDown 5
+pop this 17
+push this 17
+push constant 1
+neg
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE4
+push pointer 0
+call SquareGame.createRec2 1
+pop temp 0
+push this 3
+push this 1
+push this 0
+push this 15
+push this 3
+call Square.moveDown 5
+pop this 15
+push this 15
+push constant 1
+neg
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE5
+push pointer 0
+call SquareGame.createRec1 1
+pop temp 0
+push this 2
+push this 1
+push this 0
+push this 14
+push this 2
+call Square.moveDown 5
+pop this 14
+push this 14
+push constant 1
+neg
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call SquareGame.dispose 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE6
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 1
+pop this 1
+label IF_FALSE7
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 2
+pop this 1
+label IF_FALSE8
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call SquareGame.moveSquare 1
+pop temp 0
+goto WHILE_EXP2
+label WHILE_END2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

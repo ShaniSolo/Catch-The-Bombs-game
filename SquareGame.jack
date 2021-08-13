@@ -1,0 +1,171 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/09/Square/SquareGame.jack
+
+/**
+ * Implements the Square Dance game.
+ * This simple game allows the user to move a black square around
+ * the screen, and change the square's size during the movement.
+ * When the game starts, a square of 30 by 30 pixels is shown at the
+ * top-left corner of the screen. The user controls the square as follows.
+ * The 4 arrow keys are used to move the square up, down, left, and right.
+ * The 'z' and 'x' keys are used, respectively, to decrement and increment
+ * the square's size. The 'q' key is used to quit the game.
+ */
+
+class SquareGame {
+   field Square square; // the square of this game
+   field int direction; // the square's current direction: 
+                        // 0=none, 1=up, 2=down, 3=left, 4=right
+   field Square rectangle1;
+   field Square rectangle2;
+   field Square rectangle3;
+   field Square rectangle4;
+   field Square rectangle5;
+   field Square rectangle6;
+
+   field int position1;
+   field int position2;
+   field int position3;
+   field int position4;
+   field int position5;
+   field int position6;
+
+   field int flag1;
+   field int flag2;
+   field int flag3;
+   field int flag4;
+   field int flag5;
+   field int flag6;
+
+   /** Constructs a new Square Game. */
+   constructor SquareGame new() {
+      // Creates a 30 by 30 pixels square and positions it at the top-left
+      // of the screen.
+      let square = Square.new(249, 232, 75, 12);
+      let direction = 0;  // initial state is no movement
+      let position1 = 75;
+      let position2 = 155;
+      let position3 = 220;
+      let position4 = 330;
+      let position5 = 400;
+      let position6 = 450;
+      let flag1 = 0;
+      let flag2 = 0;
+      let flag3 = 0;
+      let flag4 = 0;
+      let flag5 = 0;
+      let flag6 = 0;
+
+      return this;
+   }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do square.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Moves the square in the current direction. */
+   method void moveSquare() {
+      if (direction = 1) { do square.moveLeft(); }
+      if (direction = 2) { do square.moveRight(); }
+      do Sys.wait(35);  // delays the next movement
+      return;
+   }
+
+   /** Creates rectangles falling dowm */
+   method void createRec1() {
+      if (flag1 = 0) {
+         let rectangle1 = Square.new(position1, 0, 2 , 12); 
+         let flag1 = 1;
+      }
+      return;
+   }
+
+      method void createRec2() {
+      if (flag2 = 0) {   
+         let rectangle2 = Square.new(position2, 0, 2 , 12); 
+         let flag2 = 1;
+      }
+      return;
+   }
+
+      method void createRec3() {
+      if (flag3 = 0) {
+         let rectangle3 = Square.new(position3, 0, 2 , 12); 
+         let flag3 = 1;
+      }
+      return;
+   }
+
+      method void createRec4() {
+      if (flag4 = 0) {
+         let rectangle4 = Square.new(position4, 0, 2 , 12); 
+         let flag4 = 1;
+      }
+      return;
+   }
+
+      method void createRec5() {
+      if (flag5 = 0) {
+         let rectangle5 = Square.new(position5, 0, 2 , 12); 
+         let flag5 = 1;
+      }
+      return;
+   }
+
+   method void createRec6() {
+      if (flag6 = 0) {
+         let rectangle6 = Square.new(position6, 0, 2 , 12); 
+         let flag6 = 1;
+      }
+      return;
+   }
+
+   /** Runs the game: handles the user's inputs and moves the square accordingly */
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      
+      while (true) {
+         // waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+            do moveSquare();
+            do createRec2();
+            let flag2 = rectangle2.moveDown(direction, square, flag2, rectangle2);
+            if (flag2 = -1){do dispose(); return;}
+            do createRec5();
+            let flag5 = rectangle5.moveDown(direction, square, flag5, rectangle5);
+            if (flag5 = -1){do dispose(); return;}
+            do createRec3();
+            let flag3 = rectangle3.moveDown(direction, square, flag3, rectangle3);
+            if (flag3 = -1){do dispose(); return;}
+            do createRec6();
+            let flag6 = rectangle6.moveDown(direction, square, flag6, rectangle6);
+            if (flag6 = -1){do dispose(); return;}
+            do createRec4();
+            let flag4 = rectangle4.moveDown(direction, square, flag4, rectangle4);
+            if (flag4 = -1){do dispose(); return;}
+            do createRec2();
+            let flag2 = rectangle2.moveDown(direction, square, flag2, rectangle2);
+            if (flag2 = -1){do dispose(); return;}
+            do createRec1();
+            let flag1 = rectangle1.moveDown(direction, square, flag1, rectangle1);
+            if (flag1 = -1){do dispose(); return;}
+         }
+            
+         if (key = 130) { let direction = 1; }   // left arrow
+         if (key = 132) { let direction = 2; }   // right arrow
+
+         // waits for the key to be released
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed(); 
+            do moveSquare();
+         }
+      } // while
+     return;
+   }
+}
